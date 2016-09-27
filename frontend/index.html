@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="BountyApp">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body ng-controller="MainController">
+
+    <div>
+        <input type="text" ng-model="newBounty.name" placeholder="New Bounty Name">
+        <label for="living">Living?</label>
+        <input type="checkbox" ng-model="newBounty.living" id="living">
+        <input type="text" ng-model="newBounty.type" placeholder="New Bounty Type">
+        <input type="text" ng-model="newBounty.amount" placeholder="New Bounty Amount">
+        <button class="btn" ng-click="addBounty()">Add New Bounty</button>
+    </div>
+    <br>
+    <br>
+
+    <div ng-repeat="bounty in bountyList track by $index">
+        <span>{{bounty.name}} </span>
+        <button class="btn" style="display:inline" ng-click="deleteBounty(bounty.id, $index)">X</button>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.js"></script>
+    <script src="app.js"></script>
+    <script src="services/httpService.js"></script>
+</body>
+
+</html>
