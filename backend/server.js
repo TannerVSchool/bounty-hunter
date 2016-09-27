@@ -3,8 +3,10 @@ var cors = require('cors');
 var uuid = require('uuid');
 var bodyParser = require('body-parser');
 var app = express();
+var path = require("path");
 
-app.use(cors());
+// app.use(cors());
+app.use(express.static(path.join(__dirname, "..", "frontend")))
 app.use(bodyParser.json());
 
 var bountyList = [{
@@ -27,14 +29,14 @@ var bountyList = [{
   id: uuid.v4(),
 }];
 
-app.get("/bounties", function (req, res) {
+app.get("/bounties", function(req, res) {
   res.send(bountyList);
 });
 
 
-app.get("/bounties/:id", function (req, res) {
+app.get("/bounties/:id", function(req, res) {
   var singleBounty;
-  bountyList.forEach(function (bounty, index) {
+  bountyList.forEach(function(bounty, index) {
     if (bounty.id === req.params.id) {
       singleBounty = bountyList[index];
     };
@@ -42,7 +44,7 @@ app.get("/bounties/:id", function (req, res) {
   res.send(singleBounty);
 });
 
-app.post("/bounties", function (req, res) {
+app.post("/bounties", function(req, res) {
   console.log(req.body);
   var newBounty = req.body;
   newBounty.id = uuid.v4();
@@ -50,10 +52,10 @@ app.post("/bounties", function (req, res) {
   res.send(newBounty);
 });
 
-app.put("/bounties/:id", function (req, res) {
+app.put("/bounties/:id", function(req, res) {
   var updatedBounty = req.body;
 
-  bountyList.forEach(function (bounty, index) {
+  bountyList.forEach(function(bounty, index) {
     if (bounty.id === req.params.id) {
       bountyList[index] = updatedBounty;
       res.send(updatedBounty);
@@ -61,9 +63,9 @@ app.put("/bounties/:id", function (req, res) {
   });
 });
 
-app.delete("/bounties/:id", function (req, res) {
+app.delete("/bounties/:id", function(req, res) {
   var deletedBounty;
-  bountyList.forEach(function (bounty, index) {
+  bountyList.forEach(function(bounty, index) {
     if (bounty.id === req.params.id) {
       deletedBounty = bountyList[index];
       bountyList.splice(index, 1);
@@ -72,6 +74,6 @@ app.delete("/bounties/:id", function (req, res) {
   res.send(deletedBounty);
 });
 
-app.listen(8000, function () {
+app.listen(8000, function() {
   console.log("You got served on port 8000");
 });
